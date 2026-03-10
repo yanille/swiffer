@@ -1,0 +1,14 @@
+[project]
+name = "swiffer"
+version = "0.1.0"
+description = "Clean Python project junk"
+readme = "README.md"
+authors = [{name="Griffin McManus"}]
+requires-python = ">=3.9"
+
+[project.scripts]
+swiffer = "swiffer.cli:main"
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
