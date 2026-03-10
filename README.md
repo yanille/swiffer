@@ -19,16 +19,10 @@ Clean the current directory:
 swiffer
 ```
 
-Clean a specific directory:
+Show how much space would be freed without deleting anything:
 
 ``` bash
-swiffer path/to/project
-```
-
-Preview what would be removed:
-
-``` bash
-swiffer --dry
+swiffer --size
 ```
 
 ## What it removes
@@ -53,5 +47,18 @@ $ swiffer
 ./swiffer.egg-info
 ./tests/__pycache__
 
-🧹 Removed 4 items.
+🧹 Removed 4 items
+💾 Freed 42.3 MB
+```
+
+## Size preview example
+
+``` bash
+$ swiffer --size
+
+./build
+./dist
+./tests/__pycache__
+
+💾 42.3 MB would be freed.
 ```
