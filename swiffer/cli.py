@@ -3,21 +3,31 @@ from pathlib import Path
 from .cleaner import clean
 
 
+def format_size(num):
+    for unit in ["B", "KB", "MB", "GB"]:
+        if num < 1024:
+            return f"{num:.1f} {unit}"
+        num /= 1024
+    return f"{num:.1f} TB"
+
+
 def main():
     args = sys.argv[1:]
 
-    path = "."
-    dry_run = False
+    size_mode = False
 
+    # Only allowed argument is --size
     for arg in args:
-        if arg == "--dry":
-            dry_run = True
+        if arg == "--size":
+            size_mode = True
         else:
-            path = arg
+            print(f"❌ Invalid argument: {arg}")
+            print("Usage: swiffer [--size]")
+            sys.exit(1)
 
-    target = Path(path).resolve()
+    target = Path(".").resolve()
 
-    removed = clean(target, dry_run=dry_run)
+    removed, total_size = clean(target, dry_run=size_mode)
 
     if not removed:
         print("✨ Nothing to clean.")
@@ -26,7 +36,10 @@ def main():
     for item in removed:
         print(item)
 
-    if dry_run:
-        print(f"\n{len(removed)} items would be removed.")
+    size_str = format_size(total_size)
+
+    if size_mode:
+        print(f"\n💾 {size_str} would be freed.")
     else:
-        print(f"\n🧹 Removed {len(removed)} items.")
+        print(f"\n🧹 Removed {len(removed)} items")
+        print(f"💾 Freed {size_str}")
